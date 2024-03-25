@@ -1,5 +1,13 @@
 #!/usr/bin/env perl
 
+##################################################
+# universal_grass_peps pipeline v1.3             #
+# Rowan Mitchell 2023                            #
+# rowan.mitchell@rothamsted.ac.uk                #
+# https://www.rowanmitchell-grassscience.co.uk/  #
+##################################################
+
+
 use strict;
 use warnings;
 use lib "/home/data/tropical_forage_grasses/grass_core/final/perl_lib";

@@ -1,8 +1,8 @@
 #!/bin/bash
 ## 
-#SBATCH --job-name=hmm1s_grass
-#SBATCH --output=%j.hmm1s_grass.out
-#SBATCH --error=%j.hmm1s_grass.err
+#SBATCH --job-name=hmms_nongr
+#SBATCH --output=%j.hmms_nongr.out
+#SBATCH --error=%j.hmms_nongr.err
 #SBATCH --time=7-0
 #SBATCH --partition=standard
 #SBATCH --ntasks=4
@@ -20,18 +20,18 @@ module load MUSCLE
 module load HMMER
 
 # make db
-./hmmscan_allgm.pl none HMM1
+./hmmscan_allgm.pl none final_hmm
 
 pids=""
-# get each grass sp from this file as query sp
-input="grass_sp_status.txt"
+# get each non-grass sp from this file as query sp
+input="EnsemblPlants/pep_gene_models/nongrass/nongrass_spp.txt"
 while IFS= read -r line
 do
 	IFS=$'\t'
 	tmp=($line)
 	if [[ ${tmp[0]} != "#"* ]] && [[ ${tmp[0]} == *"_"* ]]; then
 		echo "sbatch sp read: ${tmp[0]}"
-		./hmmscan_allgm.pl ${tmp[0]} HMM1 &
+		./hmmscan_allgm.pl ${tmp[0]} final_hmm &
         # store PID of process
         pids+=" $!"
 	fi
@@ -49,9 +49,8 @@ for p in $pids; do
         fi
 done
 if ((allok)); then
-		echo "All processes ok. Running script to write fasta of hits"
-		./write_hmm1scan_hits.pl
+		echo "All processes ok. Compiling nongrass hits"
+		./compile-hmmscan-tophits.pl
 else
 		echo "At least 1 process FAILed check error log"
 fi
-

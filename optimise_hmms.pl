@@ -1,5 +1,14 @@
 #!/usr/bin/env perl
 
+##################################################
+# universal_grass_peps pipeline v1.4             #
+# Rowan Mitchell 2020-2024                       #
+# rowan.mitchell@rothamsted.ac.uk                #
+# https://www.rowanmitchell-grassscience.co.uk/  #
+##################################################
+
+
+
 use strict;
 use warnings;
 use Bio::SeqIO;
@@ -35,7 +44,7 @@ die "first argument $steptodo not recognised. Must be one of @ks\n" unless (exis
 my $statfileopt = $ARGV[1] || "all"; # status file option from cl
 
 # per sp status file (GM steps ; should be all complete). defines @sps
-my ($gmfinished, $spstatR) = Pipeline::read_gmsteps_status();	
+my $gmfinished = Pipeline::read_gmsteps_status();	
 die "All genemodel need to be complete to run this\n" unless ($gmfinished);
 
 # get grpid status
@@ -45,8 +54,8 @@ my %grpidstodo;
 foreach my $grpid (keys %$grpid_statusR) {
 	if ($grpid_statusR->{ $grpid}{"step_complete"} eq $STEPTODO_STEPDONE{$steptodo}) { # stat is at previous step 
 		$grpidstodo{$grpid} = 1; # so add to list to do
-	} elsif ($grpid_statusR->{ $grpid}{"step_complete"} ne $steptodo) { # problem as stat is not equal to only other allowed value (current step done)
-		die "stat value of grp $grpid \'" . $grpid_statusR->{ $grpid}{"step_complete"} . "\' is not allowed for step $steptodo. Needs to be $steptodo or "
+	} elsif ($grpid_statusR->{ $grpid}{"step_complete"} ne $steptodo) { # poss problem as stat is not equal to only other allowed value (current step done)
+		warn "stat value of grp $grpid \'" . $grpid_statusR->{ $grpid}{"step_complete"} . "\' is unusual for step $steptodo. Expected to be $steptodo or "
 		. $STEPTODO_STEPDONE{$steptodo} ."\n";
 	}
 }

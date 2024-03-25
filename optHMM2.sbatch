@@ -15,7 +15,6 @@
 #+
 # Below here is the script itself
 #-
-module purge
 module load BioPerl
 module load MUSCLE
 module load HMMER

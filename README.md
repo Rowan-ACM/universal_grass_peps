@@ -1,4 +1,4 @@
-The universal_grass_peps database is mainly for biologists to use and the scripts located here are not currently designed for easy re-use. Nevertheless with some changes it should be possible to run them on a Linux cluster.
+The universal_grass_peps database doi.org/10.23637/rothamsted.98ywz is mainly for biologists to use and the scripts located here are not currently designed for easy re-use. Nevertheless with some changes it should be possible to run them on a Linux cluster.
 
 You will need following modules available to install: BioPerl BLAST+ MUSCLE HMMER
 And some way of running the genBlastG application.
